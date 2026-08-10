@@ -160,26 +160,11 @@ const miVocabulario = [
     imagen_tarjeta: "https://images.unsplash.com/photo-1485965120184-e220f721d03e?w=600&auto=format&fit=crop&q=80",
     imagen_puzle: "https://images.unsplash.com/photo-1544620347-c4fd4a3d5957?w=800&auto=format&fit=crop&q=80",
     frase_acierto: "¡A pedalear! La bicicleta rueda feliz en el parque."
-  },
-  {
-    palabra: "Sandía",
-    categoria: "Frutas",
-    imagen_tarjeta: "tarjetas/sandia_tarjeta.jpg",
-    imagen_puzle: "puzles/sandia_puzle.jpg",
-    frase_acierto: "¡Genial! ¡Descubriste Sandía, estás aprendiendo muchísimo!"
-  },
-  {
-    palabra: "Delfín",
-    categoria: "Animales",
-    imagen_tarjeta: "tarjetas/delfin_tarjeta.jpg",
-    imagen_puzle: "puzles/delfin_puzle.jpg",
-    frase_acierto: "¡Fantástico! La palabra era Delfín, ¡lo has hecho de maravilla!"
-  },
-  {
-    palabra: "Estrella de mar",
-    categoria: "Playa",
-    imagen_tarjeta: "tarjetas/estrella_de_mar_tarjeta.jpg",
-    imagen_puzle: "puzles/estrella_de_mar_puzle.jpg",
-    frase_acierto: "¡Genial! ¡Descubriste Estrella de mar, estás aprendiendo muchísimo!"
   }
 ];
+
+// Asignar al objeto global window para máxima compatibilidad
+if (typeof window !== 'undefined') {
+  window.miVocabulario = miVocabulario;
+}
+
