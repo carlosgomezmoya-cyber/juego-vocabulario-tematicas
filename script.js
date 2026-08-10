@@ -46,6 +46,17 @@ document.addEventListener('DOMContentLoaded', () => {
     'Naturaleza': '🌳'
   };
 
+  // HELPER PARA OBTENER EL VOCABULARIO DE FORMA SEGURA
+  function getVocab() {
+    if (typeof miVocabulario !== 'undefined' && Array.isArray(miVocabulario)) {
+      return miVocabulario;
+    }
+    if (typeof window !== 'undefined' && window.miVocabulario && Array.isArray(window.miVocabulario)) {
+      return window.miVocabulario;
+    }
+    return [];
+  }
+
   // --- REGISTRO DEL SERVICE WORKER DE PWA ---
   if ('serviceWorker' in navigator) {
     navigator.serviceWorker.register('sw.js')
@@ -73,6 +84,16 @@ document.addEventListener('DOMContentLoaded', () => {
         alert('Para instalar en tu tablet Android:\n1. Toca los 3 puntos (⋮) de Chrome.\n2. Selecciona "Añadir a la pantalla de inicio".');
       }
     });
+  }
+
+  // BOTONES DEL ENCABEZADO Y MENÚ
+  const btnAll = document.getElementById('btn-play-all');
+  if (btnAll) {
+    btnAll.onclick = () => startCategoryGame(null);
+  }
+
+  if (btnHome) {
+    btnHome.onclick = showMenuScreen;
   }
 
   // --- SÍNTESIS DE VOZ Y EFECTOS DE SONIDO ---
@@ -131,18 +152,19 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- INICIALIZACIÓN DEL MENÚ DE CATEGORÍAS ---
   function initMenu() {
-    if (!window.miVocabulario || !Array.isArray(window.miVocabulario)) {
-      console.error('No se encontró la variable miVocabulario.');
+    const vocab = getVocab();
+    if (!vocab || vocab.length === 0) {
+      console.error('No se encontró vocabulario válido.');
       return;
     }
 
     // Extraer categorías únicas
-    const categorias = [...new Set(window.miVocabulario.map(item => item.categoria))];
+    const categorias = [...new Set(vocab.map(item => item.categoria))];
     categoriesGrid.innerHTML = '';
 
     // Generar tarjeta para cada categoría
     categorias.forEach(cat => {
-      const count = window.miVocabulario.filter(i => i.categoria === cat).length;
+      const count = vocab.filter(i => i.categoria === cat).length;
       const icon = categoryIcons[cat] || '⭐';
 
       const card = document.createElement('div');
@@ -156,17 +178,6 @@ document.addEventListener('DOMContentLoaded', () => {
       card.addEventListener('click', () => startCategoryGame(cat));
       categoriesGrid.appendChild(card);
     });
-
-    // Evento para jugar con todo el vocabulario
-    const btnAll = document.getElementById('btn-play-all');
-    if (btnAll) {
-      btnAll.onclick = () => startCategoryGame(null);
-    }
-
-    // Botón volver al menú
-    if (btnHome) {
-      btnHome.onclick = showMenuScreen;
-    }
   }
 
   function showMenuScreen() {
@@ -178,14 +189,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- INICIAR JUEGO ---
   function startCategoryGame(category) {
+    const vocab = getVocab();
     selectedCategory = category;
     correctCount = 0;
 
     if (category) {
-      activeVocabList = window.miVocabulario.filter(i => i.categoria === category);
+      activeVocabList = vocab.filter(i => i.categoria === category);
       currentCategoryTag.textContent = `${categoryIcons[category] || '⭐'} ${category}`;
     } else {
-      activeVocabList = [...window.miVocabulario];
+      activeVocabList = [...vocab];
       currentCategoryTag.textContent = `🌟 Todo el Vocabulario`;
     }
 
@@ -199,6 +211,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // --- SIGUIENTE RONDA ---
   function nextRound() {
+    const vocab = getVocab();
     rewardModal.classList.add('hidden');
     puzzleTracker.textContent = `⭐ Aciertos: ${correctCount}`;
 
@@ -207,7 +220,7 @@ document.addEventListener('DOMContentLoaded', () => {
     currentTargetItem = activeVocabList[randomIndex];
 
     // Formar las opciones (1 correcta + 2 distractores)
-    const distractors = window.miVocabulario.filter(item => item.palabra !== currentTargetItem.palabra);
+    const distractors = vocab.filter(item => item.palabra !== currentTargetItem.palabra);
     
     // Mezclar distractores
     const shuffledDistractors = distractors.sort(() => 0.5 - Math.random()).slice(0, 2);
@@ -222,6 +235,7 @@ document.addEventListener('DOMContentLoaded', () => {
       speakText(`Toca la imagen de ${currentTargetItem.palabra}`);
     }, 300);
   }
+
 
   // REPETIR VOZ CON EL BOTÓN ALTAVOZ
   if (btnSpeaker) {
