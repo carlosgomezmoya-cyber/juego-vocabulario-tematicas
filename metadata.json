@@ -1,0 +1,6 @@
+{
+  "name": "Vocabulario para Inés",
+  "description": "Juego educativo accesible de reconocimiento de vocabulario adaptado para parálisis cerebral motora con síntesis de voz y sistema de recompensa.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

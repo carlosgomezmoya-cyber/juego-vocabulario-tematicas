@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+  <title>Juego de Vocabulario para Inés</title>
+  
+  <!-- Configuración PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0284c7" />
+  <meta name="mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Vocabulario Inés" />
+
+  <!-- Fuentes Tipográficas -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700;900&family=Outfit:wght@700;800;900&display=swap" rel="stylesheet">
+
+  <!-- Estilos Adaptados para Tablet -->
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body oncontextmenu="return false;">
+
+  <!-- CABECERA PRINCIPAL -->
+  <header class="app-header">
+    <div class="brand-container">
+      <span class="brand-icon">📖</span>
+      <h1 class="brand-title">Vocabulario Inés</h1>
+    </div>
+
+    <div class="header-controls">
+      <button id="btn-audio-toggle" class="btn-icon" aria-label="Cambiar Voz">
+        🔊 Voz On
+      </button>
+      <button id="btn-install" class="btn-icon hidden" style="background: #10b981; color: white; border-color: #059669;">
+        📱 Instalar
+      </button>
+      <button id="btn-home" class="btn-icon" aria-label="Menú Principal">
+        🏠 Menú
+      </button>
+    </div>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="app-content">
+
+    <!-- PANTALLA 1: MENÚ DE CATEGORÍAS -->
+    <section id="menu-screen">
+      <div class="menu-header">
+        <h2 class="menu-title">¡Hola! Elige una categoría 🎨</h2>
+        <p class="menu-subtitle">Toca un grupo para empezar a escuchar las palabras</p>
+      </div>
+
+      <!-- PARRILLA DE CATEGORÍAS DINÁMICAS DESDE VOCABULARIO.JS -->
+      <div id="categories-grid" class="categories-grid">
+        <!-- Generado dinámicamente desde script.js -->
+      </div>
+
+      <!-- BOTÓN PARA JUGAR CON TODO EL VOCABULARIO -->
+      <div class="all-vocab-section">
+        <button id="btn-play-all" class="btn-primary">
+          <span>🌟 ¡JUGAR CON TODO EL VOCABULARIO!</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- PANTALLA 2: PANTALLA DE JUEGO -->
+    <section id="game-screen" class="hidden">
+      <!-- BARRA DE PROGRESO DE LA CATEGORÍA -->
+      <div class="game-topbar">
+        <div id="current-category-tag" class="current-category-tag">
+          🏖️ Playa
+        </div>
+        <div id="puzzle-tracker" class="puzzle-tracker">
+          ⭐ Aciertos: 0
+        </div>
+      </div>
+
+      <!-- CUADRO DE ENUNCIADO OBJETIVO -->
+      <div class="prompt-box">
+        <div class="prompt-text-container">
+          <span class="prompt-label">TOCA LA IMAGEN DE:</span>
+          <span id="prompt-word" class="prompt-word">Rastrillo</span>
+        </div>
+        <button id="btn-speaker" class="btn-speaker-large" aria-label="Repetir palabra">
+          🔊
+        </button>
+      </div>
+
+      <!-- OPCIONES DE TARJETAS (GENERADO POR SCRIPT.JS) -->
+      <div id="options-grid" class="options-grid">
+        <!-- Tarjetas dinámicas -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- MODAL DE RECOMPENSA DE PUZLE Y FRASE DE ACIERTO -->
+  <div id="reward-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <div class="reward-badge">
+        <span>🧩 ¡MUY BIEN! 🧩</span>
+      </div>
+
+      <div class="puzzle-image-container">
+        <img id="puzzle-img" class="puzzle-img" src="" alt="Imagen de Recompensa del Puzle" />
+      </div>
+
+      <p id="reward-phrase" class="reward-phrase">
+        ¡Genial! El rastrillo sirve para jugar en la arena.
+      </p>
+
+      <button id="btn-next" class="btn-primary" style="margin-top: 10px;">
+        <span>¡SIGUIENTE PALABRA! ➔</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- ARCHIVOS DE CÓDIGO AUTÓNOMOS VANILLA -->
+  <script src="vocabulario.js"></script>
+  <script src="script.js"></script>
+
+</body>
+</html>
